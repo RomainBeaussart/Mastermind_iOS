@@ -9,22 +9,26 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
     
+    private lazy var game = Mastermind()
     
     @IBOutlet var blockd: [UIButton]!
     
-
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+        for b in blockd {
+            b.layer.cornerRadius = 25
+        }
+    }
+    
     @IBAction func blockTouched(_ sender: UIButton) {
-        let blockText = sender.titleLabel!.text!
-        print("\(blockText) block was touched")
-        
+
         changeColor (ofBlock: sender)
-        printAllBlockColors ()
+    }
+    
+    @IBAction func sendResult(_ sender: UIButton) {
+        validBlockColors ()
     }
     
     func changeColor (ofBlock thisBlock: UIButton) {
@@ -38,38 +42,41 @@ class ViewController: UIViewController {
         case UIColor.green:
             thisBlock.backgroundColor = UIColor.blue
         case UIColor.blue:
-            thisBlock.backgroundColor = UIColor.black
+            thisBlock.backgroundColor = UIColor.yellow
+        case UIColor.yellow:
+            thisBlock.backgroundColor = UIColor.magenta
+        case UIColor.magenta:
+            thisBlock.backgroundColor = UIColor.orange
+        case UIColor.orange:
+            thisBlock.backgroundColor = UIColor.red
         default:
             thisBlock.backgroundColor = UIColor.black
         }
     }
     
-    func printAllBlockColors () {
+    func validBlockColors () {
         var colors = ""
+        let line = Line()
+        var i = 0
         for b in blockd {
             colors = colors + " \(b.backgroundColor!.name!)"
+            line.changeColor(index: i, color: b.backgroundColor!.name!)
+            i += 1
         }
         print("Colors: \(colors) \n")
     }
 }
 
 extension UIColor {
-    var name: String? {
+    var name: Color? {
         switch self {
-        case UIColor.black: return "black"
-        case UIColor.darkGray: return "darkGray"
-        case UIColor.lightGray: return "lightGray"
-        case UIColor.white: return "white"
-        case UIColor.gray: return "gray"
-        case UIColor.red: return "red"
-        case UIColor.green: return "green"
-        case UIColor.blue: return "blue"
-        case UIColor.cyan: return "cyan"
-        case UIColor.yellow: return "yellow"
-        case UIColor.magenta: return "magenta"
-        case UIColor.orange: return "orange"
-        case UIColor.purple: return "purple"
-        case UIColor.brown: return "brown"
+        case UIColor.black: return Color.black
+        case UIColor.red: return Color.red
+        case UIColor.green: return Color.green
+        case UIColor.blue: return Color.blue
+        case UIColor.yellow: return Color.yellow
+        case UIColor.magenta: return Color.magenta
+        case UIColor.orange: return Color.orange
         default: return nil
         }
     }
