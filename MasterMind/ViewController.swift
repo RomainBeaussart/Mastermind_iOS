@@ -11,7 +11,10 @@ import UIKit
 class ViewController: UIViewController {
     
     private lazy var game = Mastermind()
+    
     private var lineNumber = 0
+    
+    private var push = false
     
     @IBOutlet var allBlocks: [UIButton]!
     
@@ -29,7 +32,7 @@ class ViewController: UIViewController {
     @IBOutlet var blocks10: [UIButton]!
     @IBOutlet var blocks11: [UIButton]!
     @IBOutlet var blocks12: [UIButton]!
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,12 +47,11 @@ class ViewController: UIViewController {
     }
     
     @IBAction func blockTouched(_ sender: UIButton) {
-
         changeColor (ofBlock: sender)
     }
     
     @IBAction func sendResult(_ sender: UIButton) {
-        validBlockColors ()
+        validBlockColors()
     }
     
     func changeColor (ofBlock thisBlock: UIButton) {
@@ -75,25 +77,35 @@ class ViewController: UIViewController {
         }
     }
     
-    func validBlockColors () {
+    func validBlockColors(){
         var colors = ""
         let line = Line()
         var i = 0
+        var correctLine = true
         for b in blockd {
-            if b.backgroundColor!.name! != Color.black {
+            if (b.backgroundColor!.name! != Color.black) {
                 colors = colors + " \(b.backgroundColor!.name!)"
                 line.changeColor(index: i, color: b.backgroundColor!.name!)
                 i += 1
+                correctLine = true
             } else {
                 let alert = UIAlertController(title: "A color is missing", message: "A color is missing in your selection. The black color is not a color taken into account in the selection of colors.", preferredStyle: UIAlertController.Style.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
+                correctLine = false
+                break
             }
         }
-        print("Colors: \(colors) \n")
-        print("\(line)")
-        setLine(colors: line, line: lineNumber)
-        lineNumber += 1
+        if correctLine {
+            setLine(colors: line, line: lineNumber)
+            var verif = game.verif(line: line)
+            lineNumber += 1
+            if(verif[0] == 4){
+                endGame(win: true)
+            } else if (lineNumber == 11){
+                endGame(win: false)
+            }
+        }
     }
     
     func setLine(colors: Line, line: Int){
@@ -132,17 +144,18 @@ class ViewController: UIViewController {
         }
     }
     
-    func winMessage(){
-        let win = UIAlertController(title: "Win !", message: "You have won.", preferredStyle: UIAlertController.Style.alert)
+    func winMessage(score: Int){
+        let win = UIAlertController(title: "Win !", message: "You have won. Your score is \(score)", preferredStyle: UIAlertController.Style.alert)
         win.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         self.present(win, animated: true, completion: nil)
     }
     
-    func looseMessage() {
+    func loseMessage() {
         let lose = UIAlertController(title: "Game Over !", message: "You used your every move.", preferredStyle: UIAlertController.Style.alert)
         lose.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         self.present(lose, animated: true, completion: nil)
     }
+    
     
     func reset() {
         for b in allBlocks {
@@ -153,6 +166,16 @@ class ViewController: UIViewController {
             b.backgroundColor = UIColor.black
         }
         lineNumber = 0
+        game = Mastermind()
+    }
+    
+    func endGame(win: Bool) {
+        if(win){
+            winMessage(score: game.getScore())
+        } else {
+            loseMessage()
+        }
+        reset()
     }
 }
 
