@@ -13,6 +13,7 @@
 		3FAA4267224D1F3E00E8F4C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FAA4266224D1F3E00E8F4C6 /* Assets.xcassets */; };
 		3FAA426A224D1F3E00E8F4C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FAA4268224D1F3E00E8F4C6 /* LaunchScreen.storyboard */; };
 		3FAFEA6E224E744000DF686D /* Mastermind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAFEA6D224E744000DF686D /* Mastermind.swift */; };
+		3FC543502261DE53008F44C6 /* score.json in Resources */ = {isa = PBXBuildFile; fileRef = 3FC5434F2261DE52008F44C6 /* score.json */; };
 		3FDE87022254D6CF000EDFE2 /* color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDE87012254D6CF000EDFE2 /* color.swift */; };
 		3FDE87042254D718000EDFE2 /* line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDE87032254D718000EDFE2 /* line.swift */; };
 /* End PBXBuildFile section */
@@ -26,6 +27,7 @@
 		3FAA4269224D1F3E00E8F4C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3FAA426B224D1F3E00E8F4C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3FAFEA6D224E744000DF686D /* Mastermind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mastermind.swift; sourceTree = "<group>"; };
+		3FC5434F2261DE52008F44C6 /* score.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = score.json; sourceTree = "<group>"; };
 		3FDE87012254D6CF000EDFE2 /* color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = color.swift; sourceTree = "<group>"; };
 		3FDE87032254D718000EDFE2 /* line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = line.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -60,6 +62,7 @@
 		3FAA425E224D1F3C00E8F4C6 /* MasterMind */ = {
 			isa = PBXGroup;
 			children = (
+				3FC5434F2261DE52008F44C6 /* score.json */,
 				3FAFEA6D224E744000DF686D /* Mastermind.swift */,
 				3FAA425F224D1F3C00E8F4C6 /* AppDelegate.swift */,
 				3FAA4261224D1F3C00E8F4C6 /* ViewController.swift */,
@@ -133,6 +136,7 @@
 			files = (
 				3FAA426A224D1F3E00E8F4C6 /* LaunchScreen.storyboard in Resources */,
 				3FAA4267224D1F3E00E8F4C6 /* Assets.xcassets in Resources */,
+				3FC543502261DE53008F44C6 /* score.json in Resources */,
 				3FAA4265224D1F3C00E8F4C6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

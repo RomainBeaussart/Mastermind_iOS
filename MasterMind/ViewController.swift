@@ -20,6 +20,8 @@ class ViewController: UIViewController {
     
     @IBOutlet var blockd: [UIButton]!
     
+    @IBOutlet var blocksResponse: [UIButton]!
+    
     @IBOutlet var blocks1: [UIButton]!
     @IBOutlet var blocks2: [UIButton]!
     @IBOutlet var blocks3: [UIButton]!
@@ -33,6 +35,21 @@ class ViewController: UIViewController {
     @IBOutlet var blocks11: [UIButton]!
     @IBOutlet var blocks12: [UIButton]!
     
+    @IBOutlet var labels: [UILabel]!
+    
+    @IBOutlet var results1: [UILabel]!
+    @IBOutlet var results2: [UILabel]!
+    @IBOutlet var results3: [UILabel]!
+    @IBOutlet var results4: [UILabel]!
+    @IBOutlet var results5: [UILabel]!
+    @IBOutlet var results6: [UILabel]!
+    @IBOutlet var results7: [UILabel]!
+    @IBOutlet var results8: [UILabel]!
+    @IBOutlet var results9: [UILabel]!
+    @IBOutlet var results10: [UILabel]!
+    @IBOutlet var results11: [UILabel]!
+    @IBOutlet var results12: [UILabel]!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +60,30 @@ class ViewController: UIViewController {
         
         for b in blockd {
             b.layer.cornerRadius = 25
+        }
+    }
+    
+    @IBAction func setResult(_ sender: UIButton) {
+        var colors = ""
+        let line = Line()
+        var i = 0
+        var correctLine = true
+        for b in blocksResponse {
+            if (b.backgroundColor!.name! != Color.black) {
+                colors = colors + " \(b.backgroundColor!.name!)"
+                line.changeColor(index: i, color: b.backgroundColor!.name!)
+                i += 1
+                correctLine = true
+            } else {
+                let alert = UIAlertController(title: "A color is missing", message: "A color is missing in your selection. The black color is not a color taken into account in the selection of colors.", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                correctLine = false
+                break
+            }
+        }
+        if correctLine {
+            game = Mastermind(correctAnswer: line)
         }
     }
     
@@ -99,6 +140,7 @@ class ViewController: UIViewController {
         if correctLine {
             setLine(colors: line, line: lineNumber)
             var verif = game.verif(line: line)
+            setResult(verif: verif, verifnumber: lineNumber)
             lineNumber += 1
             if(verif[0] == 4){
                 endGame(win: true)
@@ -144,6 +186,42 @@ class ViewController: UIViewController {
         }
     }
     
+    func setResult(verif: [Int], verifnumber:Int){
+        var lineResult : [UILabel]! {
+            switch verifnumber {
+            case 0:
+                return self.results1
+            case 1:
+                return self.results2
+            case 2:
+                return self.results3
+            case 3:
+                return self.results4
+            case 4:
+                return self.results5
+            case 5:
+                return self.results6
+            case 6:
+                return self.results7
+            case 7:
+                return self.results8
+            case 8:
+                return self.results9
+            case 9:
+                return self.results10
+            case 10:
+                return self.results11
+            case 11:
+                return self.results12
+            default:
+                return nil
+            }
+        }
+        for i in 0...1 {
+            lineResult[i].text = "\(verif[i])"
+        }
+    }
+    
     func winMessage(score: Int){
         let win = UIAlertController(title: "Win !", message: "You have won. Your score is \(score)", preferredStyle: UIAlertController.Style.alert)
         win.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
@@ -158,12 +236,17 @@ class ViewController: UIViewController {
     
     
     func reset() {
+        game.save()
         for b in allBlocks {
             b.backgroundColor = UIColor.white
         }
         
         for b in blockd {
             b.backgroundColor = UIColor.black
+        }
+        
+        for l in labels {
+            l.text = "0"
         }
         lineNumber = 0
         game = Mastermind()
@@ -204,7 +287,6 @@ extension Color {
             case Color.yellow: return UIColor.yellow
             case Color.magenta: return UIColor.magenta
             case Color.orange: return UIColor.orange
-            default: return UIColor.black
         }
     }
 }
